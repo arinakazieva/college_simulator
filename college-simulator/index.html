@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>College Simulator — Senior Year</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<!-- ── Splash / Start screen ─────────────────────────── -->
+<div id="splash-screen" class="splash-screen">
+  <div class="splash-content">
+    <div class="splash-brand">
+      <div class="splash-mark">CL&middot;S</div>
+      <h1 class="splash-title">College Life</h1>
+      <p class="splash-subtitle">A Senior-Year Simulator</p>
+    </div>
+    <p class="splash-tagline">
+      120 days. Five slots per day. Twelve random events. Seven endings.
+      <br />Energy, sleep, and your GPA all want a piece of you.
+    </p>
+    <div class="splash-actions">
+      <button id="btn-splash-new"      class="splash-btn splash-btn-primary">New Game</button>
+      <button id="btn-splash-continue" class="splash-btn">Continue</button>
+    </div>
+    <footer class="splash-footer">
+      Vanilla JS &middot; localStorage &middot; No build step
+    </footer>
+  </div>
+</div>
+
+<div id="app" class="app-hidden">
+
+  <!-- ── Header ─────────────────────────────── -->
+  <header class="app-header">
+    <div class="header-row">
+      <div class="header-brand">
+        <span class="app-title">College Simulator</span>
+        <span class="app-subtitle">Senior Year</span>
+      </div>
+      <div class="header-meta">
+        <span id="day-display">Day 1 / 120</span>
+        <span id="slot-badge">Morning</span>
+      </div>
+    </div>
+    <div class="header-sub">
+      <div class="day-track">
+        <div id="day-progress-bar"></div>
+      </div>
+      <div id="slot-progress"></div>
+    </div>
+  </header>
+
+  <!-- ── Main grid ───────────────────────────── -->
+  <main class="app-main">
+
+    <!-- Left: Stats + Relationships + Inventory -->
+    <aside class="panel stats-panel">
+      <h2 class="panel-title">Stats</h2>
+      <div id="stats-container"></div>
+
+      <div class="sub-section">
+        <h2 class="panel-title">Relationships</h2>
+        <div id="npc-container" class="npc-container"></div>
+      </div>
+
+      <div class="sub-section">
+        <h2 class="panel-title">Inventory</h2>
+        <div id="inventory-container" class="inventory-container"></div>
+      </div>
+    </aside>
+
+    <!-- Centre: Actions -->
+    <section class="panel actions-panel">
+      <div class="slot-header">
+        <span id="current-slot-label">Morning</span>
+        <p id="slot-hint">Choose how to spend this time:</p>
+      </div>
+      <div id="actions-container"></div>
+      <div class="continue-wrapper">
+        <button id="btn-continue" class="hidden">Next Slot &rarr;</button>
+      </div>
+    </section>
+
+    <!-- Right: Activity log -->
+    <aside class="panel log-panel">
+      <h2 class="panel-title">Activity Log</h2>
+      <ul id="log-list"></ul>
+    </aside>
+
+  </main>
+
+  <!-- ── Footer ─────────────────────────────── -->
+  <footer class="app-footer">
+    <div class="footer-left">
+      <button id="btn-new-game">New Game</button>
+    </div>
+    <div class="footer-right">
+      <span class="autosave-note">&#10003; Autosaved locally</span>
+      <span class="footer-version">v1.0</span>
+    </div>
+  </footer>
+
+</div><!-- /#app -->
+
+<!-- ── Modal overlay ──────────────────────────── -->
+<div id="modal-overlay" class="modal-overlay" aria-hidden="true">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <h2 id="modal-title" class="modal-title"></h2>
+    <div id="modal-body" class="modal-body"></div>
+    <div id="modal-actions" class="modal-actions"></div>
+  </div>
+</div>
+
+<!-- ── Scripts — load order matters ──────────── -->
+<script src="js/config.js"></script>
+<script src="js/gameState.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/events.js"></script>
+<script src="js/actions.js"></script>
+<script src="js/gameLoop.js"></script>
+<script src="js/ui.js"></script>
+
+<script>
+  // Bootstrap: load save → init state → init UI
+  (function () {
+    'use strict';
+    var saved = loadGame();
+    initState(saved);
+    initUI();
+  }());
+</script>
+
+</body>
+</html>
